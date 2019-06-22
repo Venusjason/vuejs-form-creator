@@ -1,23 +1,41 @@
 {
-  "name": "iview-form",
+  "name": "@yowant/vue-form-creator",
   "version": "0.1.0",
-  "private": true,
+  "description": "vue json form 生成器, 适配element iview",
+  "private": false,
+  "main": "lib/formCreator/index.js",
+  "keywords": [
+    "vue",
+    "formCreator",
+    "element",
+    "iview"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "release": "rollup -c && npm publish"
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "iview": "^3.4.2",
     "vue": "^2.6.10"
   },
   "devDependencies": {
+    "@types/rollup-plugin-node-resolve": "^4.1.0",
+    "@types/uglify-es": "^3.0.0",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
+    "@vue/babel-preset-jsx": "^1.0.0",
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-node-resolve": "^5.0.4",
+    "rollup-plugin-uglify": "^6.0.2",
+    "uglify-es": "^3.3.9",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
