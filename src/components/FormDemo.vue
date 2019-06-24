@@ -9,7 +9,6 @@
   <div style="padding-left: 100px;">
     <Button type="primary" @click="submit">提交</Button>
   </div>
-  <pre>{{JSON.stringify(formValidate, null, 2)}}</pre>
 </div>
 </template>
 <script>
@@ -25,6 +24,9 @@ export default {
         'label-width': 100,
         inline: false,
         status: 'edit',
+        autoAuffix: true,
+        itemSpan: 16,
+        debug: true,
       },
       formValidate: {
         name: '',
@@ -42,28 +44,26 @@ export default {
     fields() {
       return [
         {
+          span: 24,
+          label: 'Name',
           name: 'name',
           placeholder: 'Enter your name',
           rules: [
             { required: true, message: 'The name cannot be empty', trigger: 'blur' }
           ],
-          item: {
-            label: 'Name',
-          },
         },
         {
+          label: 'mail',
           name: 'mail',
           placeholder: 'Enter your e-mail',
           rules: [
             { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
             { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
           ],
-          item: {
-            label: 'mail',
-          },
         },
         {
           tag: 'Select',
+          label: 'city',
           name: 'city',
           placeholder: 'Select your city',
           options: [
@@ -74,9 +74,6 @@ export default {
           rules: [
             { required: true, message: 'Please select the city', trigger: 'change' }
           ],
-          item: {
-            label: 'city',
-          },
         },
         [{
           tag: 'DatePicker',
@@ -84,9 +81,7 @@ export default {
           type: 'date',
           span: 11,
           placeholder: 'Select date',
-          item: {
-            label: 'Date',
-          },
+          label: 'Date',
         },{
           component: (h) => (<Col style="text-align: center">-</Col>),
           span: 2,
@@ -98,6 +93,7 @@ export default {
           placeholder: 'Select time',
           item: {
             label: '',
+            'label-width': 0,
           },
         }],
         {
@@ -110,9 +106,7 @@ export default {
           rules: [
             { required: true, message: 'Please select gender', trigger: 'change' }
           ],
-          item: {
-            label: 'Gender',
-          },
+          label: 'Gender',
         },
         {
           tag: 'CheckboxGroup',
@@ -127,11 +121,10 @@ export default {
             { required: true, type: 'array', min: 1, message: 'Choose at least one hobby', trigger: 'change' },
             { type: 'array', max: 2, message: 'Choose two hobbies at best', trigger: 'change' }
           ],
-          item: {
-            label: 'Hobby',
-          },
+          label: 'Hobby',
         },
         {
+          label: 'Desc',
           name: 'desc',
           type: 'textarea',
           placeholder: 'Enter something...',
