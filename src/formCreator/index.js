@@ -11,6 +11,8 @@ const install = (Vue, options = {ui: 'element'}) => {
   Vue.component(Form.name, Form)
 }
 
+export const formCreatorFunc = formCreator
+
 export default {
   install,
 }

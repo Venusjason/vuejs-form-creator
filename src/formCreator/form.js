@@ -1,4 +1,4 @@
-// import formMsg from './formMsg.vue'
+import formMsg from './formMsg'
 import Adaptive from './Adaptive'
 
 const getArrKey = (str) => {
@@ -86,11 +86,11 @@ const formCreator = (formCreatorConfig) => {
       return h('div', {}, [
         elForm,
         // 开发环境 提供表单值查看功能
-        // debug && (h(formMsg, {
-        //   props: {
-        //     formModel: vm.formValues
-        //   },
-        // })),
+        debug && (h(formMsg, {
+          props: {
+            model: vm.formValues
+          },
+        })),
       ])
     },
 
@@ -126,8 +126,9 @@ const formCreator = (formCreatorConfig) => {
       },
 
       renderFormItem (h, {
-        tag, component, rules, previewFormItemValue,
-        item: label = {}, class: detailClass = {}, style: detailStyle = {}, ...detail
+        tag, component, rules, previewFormItemValue, label: itemLabel,
+        item: label = {}, class: detailClass = {}, style: detailStyle = {}, 
+        ...detail
       }) {
         if (tag && component) {
           console.error('tag 与 component不可同时使用')
@@ -328,7 +329,8 @@ const formCreator = (formCreatorConfig) => {
         } else {
           formItemChildren = [...children]
         }
-        const { label: formItemLabel, ...labelrest } = label
+        const { label: formItemLabel, ...labelrest } = label // 这是item字段
+        const labelStr = formItemLabel || itemLabel || ''
         return h(
           UI['FormItem'],
           {
@@ -337,7 +339,7 @@ const formCreator = (formCreatorConfig) => {
             props: {
               rules,
               size,
-              label: formItemLabel + (vm.option.autoAuffix ? '：' : ''),
+              label: labelStr + ((labelStr && vm.option.autoAuffix) ? '：' : ''),
               prop: name,
               ...labelrest
             }
@@ -352,7 +354,7 @@ const formCreator = (formCreatorConfig) => {
       renderFormItems (h) {
         const vm = this
         const mapFormItems = (item) => {
-          const defaultSpan = 24
+          const defaultSpan = vm.option.itemSpan || 24
           let formItem
           if (item.name) {
             formItem = vm.renderFormItem(h, item)

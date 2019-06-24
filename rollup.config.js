@@ -16,7 +16,7 @@ export default {
   //你想将其格式化成什么格式
   output: {
     format: 'umd',
-    file: 'lib/formCreator/index.js',
+    file: 'lib/index.js',
     name: 'formCreator',
     minify: true,
   },
