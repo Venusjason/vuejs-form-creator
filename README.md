@@ -9,6 +9,8 @@
 
 #### vue-cli 3.0引入jsx写法编译
 
+*vue 版本要求 > 2.6.0*
+
 ```
 npm install @vue/babel-preset-jsx @vue/babel-helper-vue-jsx-merge-props -D
 ```
@@ -47,6 +49,7 @@ fields | 表单域数组 | Array( item 可以是object 或 array )
 status | 代替disabled(boolean)| string |edit、disabled、 preview| edit
 debug | boolean, 快捷调试入口 | boolean | - | false
 autoAuffix | el-form-item label 后缀自动补齐(如： '姓名' -> '姓名：') | boolean | - | false
+itemSpan | formItem span全局参数,优先级itemSpan < formItem.span | number | 0~24 | 24
 
 #### fields item api
 
@@ -54,6 +57,7 @@ autoAuffix | el-form-item label 后缀自动补齐(如： '姓名' -> '姓名：
 ---|--- |--- |--- |---
 tag | 标签, 与component不同时使用| string | - | el-input
 component | 组件，适用于自定义表单控件值 | function | - | -
+label | label展示值,同下item(label),优先级 label < item.label
 name | 表单对应字段 | string | - | -
 options| select checkbox-group时使用 | {label: '', value: ''}[] | 
 previewFormItemValue| 可选参数,当option.status 为preview时生效,展示文字自定义 | - | (value, h) => value| form[name]
@@ -71,6 +75,13 @@ item| 对应el-form-item 属性透传，(prop 对应 name, 不需要再声明pro
 
 ##### example
 
+- 全局引入
+
+```
+import VueFormCreator from '@yowant/vue-form-creator'
+Vue.use(VueFormCreator, 'iview')// 第二个人参数传 'iview' 或 'element'
+```
+
 
 ```
 <template>
@@ -83,7 +94,6 @@ item| 对应el-form-item 属性透传，(prop 对应 name, 不需要再声明pro
 
 <script>
 
-import FormCreator from 'formCreator.js'
 
 export default {
     data() {
@@ -120,8 +130,9 @@ export default {
                     span: 12, // 布局 el-col 对应的span   
                 },
                 {
+                    label: '年龄',
                     item: {
-                        label: '年龄',
+                        label: '展示年龄', // 优先级高于label
                     },
                     tag: 'el-input-input',
                     name: 'age',
@@ -232,4 +243,17 @@ export default {
 - iview 版本demo
 
 ![image](http://jykt-js-one-test.oss-cn-hangzhou.aliyuncs.com/trialImg/2019/06/4596621415358968.png)
-项目代码示例 `http://gitlab.ywwl.com/H5/xiaoy-zhibo-saas/blob/formcreate/src/views/Demo/FormBuild.vue`
+项目代码示例 
+element
+
+```
+http://gitlab.ywwl.com/H5/xiaoy-zhibo-saas/blob/formcreate/src/views/Demo/FormBuild.vue
+```
+
+
+iview 
+```
+http://gitlab.ywwl.com/yfe/vue-form-creator/blob/master/src/components/FormDemo.vue
+```
+
+项目内网git地址`http://gitlab.ywwl.com/yfe/vue-form-creator`
