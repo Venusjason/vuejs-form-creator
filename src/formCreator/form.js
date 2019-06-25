@@ -252,9 +252,9 @@ const formCreator = (formCreatorConfig) => {
                     ...vm.filterAttrs(option)
                   },
                   props: {
+                    ...option,
                     key: option.value,
                     label: option.value,
-                    ...option
                   }
                 },
                 [option.label]
@@ -284,9 +284,9 @@ const formCreator = (formCreatorConfig) => {
                     ...vm.filterAttrs(option)
                   },
                   props: {
+                    ...option,
                     key: option.value,
                     label: option.value,
-                    ...option
                   },
                   on: {
                     ...modelEvents
