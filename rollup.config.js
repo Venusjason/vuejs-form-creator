@@ -11,7 +11,7 @@ export default {
     babel({
         exclude: 'node_modules/**' // 只转译我们的源代码
     }),
-    uglify({}, minify),
+    // uglify({}, minify),
   ],
   //你想将其格式化成什么格式
   output: {

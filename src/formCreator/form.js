@@ -368,13 +368,16 @@ const formCreator = (formCreatorConfig) => {
           }, [formItem])
         }
         return this.fields.map((item, index) => {
-          if (Array.isArray(item)) {
+          if (Array.isArray(item) && item.length > 0) {
             const formItem = item.map(itemChild => mapFormItems(itemChild))
             return h(UI.Row, {
               props: {
                 gutter: item[0].gutter || 40,
               },
             }, formItem)
+          }
+          if (!item || item.length === 0) {
+            return null
           }
           // el-row el-col span
           const formItem = mapFormItems(item)
