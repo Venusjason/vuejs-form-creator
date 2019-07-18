@@ -1,6 +1,8 @@
 import formMsg from './formMsg'
 import Adaptive from './Adaptive'
 
+// v1.0.3
+
 const getArrKey = (str) => {
   // goods[0].id => goods.0.id
   const str1 = str.replace(/\[(\w+)\]/g, '.$1').replace(/^\./, '')
@@ -10,7 +12,7 @@ const getArrKey = (str) => {
 
 const formCreator = (formCreatorConfig) => {
   const UI = Adaptive[formCreatorConfig.ui]
-  return { 
+  return {
     name: 'form-creator',
     props: {
       value: {
@@ -67,7 +69,7 @@ const formCreator = (formCreatorConfig) => {
       const vm = this
       const { status, debug, ...rest } = vm.option
       const elForm = h(
-        UI['Form'],
+        UI.Form,
         {
           props: {
             model: vm.formValues,
@@ -127,7 +129,7 @@ const formCreator = (formCreatorConfig) => {
 
       renderFormItem (h, {
         tag, component, rules, previewFormItemValue, label: itemLabel,
-        item: label = {}, class: detailClass = {}, style: detailStyle = {}, 
+        item: label = {}, class: detailClass = {}, style: detailStyle = {},
         ...detail
       }) {
         if (tag && component) {
@@ -185,7 +187,7 @@ const formCreator = (formCreatorConfig) => {
             children = [component(h)]
           }
         } else {
-          if (tag === UI['Select']) {
+          if (tag === UI.Select) {
             if (detail.multiple) { // 多选 数组形式 value是id数组
               previewText = ''
             }
@@ -212,7 +214,7 @@ const formCreator = (formCreatorConfig) => {
                   ...modelEvents
                 }
               },
-              (detail.options || []).map(option => h(UI['Option'], {
+              (detail.options || []).map(option => h(UI.Option, {
                 attrs: {
                   ...vm.filterAttrs(option)
                 },
@@ -223,14 +225,14 @@ const formCreator = (formCreatorConfig) => {
               }))
             )
             children = [select]
-          } else if (tag === UI['CheckboxGroup']) {
+          } else if (tag === UI.CheckboxGroup) {
             detail.options.forEach(ele => {
               if (previewText === ele.value) {
                 previewText = ele.label
               }
             })
             const checkbox = h(
-              UI['CheckboxGroup'],
+              UI.CheckboxGroup,
               {
                 class: detailClass,
                 style: detailStyle,
@@ -246,7 +248,7 @@ const formCreator = (formCreatorConfig) => {
                 }
               },
               (detail.options || []).map(option => h(
-                UI['Checkbox'],
+                UI.Checkbox,
                 {
                   attrs: {
                     ...vm.filterAttrs(option)
@@ -262,9 +264,9 @@ const formCreator = (formCreatorConfig) => {
             )
 
             children = [checkbox]
-          } else if (tag === UI['RadioGroup']) {
+          } else if (tag === UI.RadioGroup) {
             // radio 适配
-            const RadioGroup = h(UI['RadioGroup'], {
+            const RadioGroup = h(UI.RadioGroup, {
               class: detailClass,
               style: detailStyle,
               attrs: {
@@ -278,27 +280,25 @@ const formCreator = (formCreatorConfig) => {
                 ...modelEvents
               },
             },
-            (detail.options || []).map(option => {
-              return h(UI['Radio'], {
-                  attrs: {
-                    ...vm.filterAttrs(option)
-                  },
-                  props: {
-                    ...option,
-                    key: option.value,
-                    label: option.value,
-                  },
-                  on: {
-                    ...modelEvents
-                  }
-                },
-                [option.label]
-              )
-            })
+            (detail.options || []).map(option => h(UI.Radio, {
+              attrs: {
+                ...vm.filterAttrs(option)
+              },
+              props: {
+                ...option,
+                key: option.value,
+                label: option.value,
+              },
+              on: {
+                ...modelEvents
+              }
+            },
+            [option.label]
+            ))
             )
             children = [RadioGroup]
           } else {
-            const input = h(tag || UI['Input'], {
+            const input = h(tag || UI.Input, {
               class: detailClass,
               style: detailStyle,
               attrs: {
@@ -332,7 +332,7 @@ const formCreator = (formCreatorConfig) => {
         const { label: formItemLabel, ...labelrest } = label // 这是item字段
         const labelStr = formItemLabel || itemLabel || ''
         return h(
-          UI['FormItem'],
+          UI.FormItem,
           {
             style: formItemStyle,
             class: formItemClass,
@@ -368,11 +368,12 @@ const formCreator = (formCreatorConfig) => {
           }, [formItem])
         }
         return this.fields.map((item, index) => {
+          if (item === null) return null
           if (Array.isArray(item) && item.length > 0) {
             const formItem = item.map(itemChild => mapFormItems(itemChild))
             return h(UI.Row, {
               props: {
-                gutter: item[0].gutter || 40,
+                gutter: item[0].gutter || 0,
               },
             }, formItem)
           }
@@ -385,6 +386,7 @@ const formCreator = (formCreatorConfig) => {
         })
       }
     },
-  }}
+  }
+}
 
 export default formCreator
