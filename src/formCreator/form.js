@@ -1,7 +1,7 @@
 import formMsg from './formMsg'
 import Adaptive from './Adaptive'
 
-// v1.0.3
+// v0.0.5
 
 const getArrKey = (str) => {
   // goods[0].id => goods.0.id
@@ -342,7 +342,9 @@ const formCreator = (formCreatorConfig) => {
               label: labelStr + ((labelStr && vm.option.autoAuffix) ? '：' : ''),
               prop: name,
               ...labelrest
-            }
+            },
+            // 提升渲染准确性
+            key: name,
           },
           [
             formItemChildren,
@@ -353,7 +355,7 @@ const formCreator = (formCreatorConfig) => {
 
       renderFormItems (h) {
         const vm = this
-        const mapFormItems = (item) => {
+        const mapFormItems = (item, i) => {
           const defaultSpan = vm.option.itemSpan || 24
           let formItem
           if (item.name) {
@@ -365,16 +367,20 @@ const formCreator = (formCreatorConfig) => {
             props: {
               span: item.span || defaultSpan
             },
+            // 提升渲染准确性
+            key: i,
           }, [formItem])
         }
         return this.fields.map((item, index) => {
           if (item === null) return null
           if (Array.isArray(item) && item.length > 0) {
-            const formItem = item.map(itemChild => mapFormItems(itemChild))
+            const formItem = item.map((itemChild, i) => mapFormItems(itemChild, i))
             return h(UI.Row, {
               props: {
                 gutter: item[0].gutter || 0,
               },
+              // 提升渲染准确性
+              key: index,
             }, formItem)
           }
           if (!item || item.length === 0) {
@@ -382,7 +388,10 @@ const formCreator = (formCreatorConfig) => {
           }
           // el-row el-col span
           const formItem = mapFormItems(item)
-          return h(UI.Row, [formItem])
+          return h(UI.Row, {
+            // 提升渲染准确性
+            key: index,
+          }, [formItem])
         })
       }
     },
