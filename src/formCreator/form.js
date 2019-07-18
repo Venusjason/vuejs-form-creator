@@ -1,7 +1,7 @@
 import formMsg from './formMsg'
 import Adaptive from './Adaptive'
 
-// v0.0.5
+// v0.6.0
 
 const getArrKey = (str) => {
   // goods[0].id => goods.0.id
@@ -356,6 +356,10 @@ const formCreator = (formCreatorConfig) => {
       renderFormItems (h) {
         const vm = this
         const mapFormItems = (item, i) => {
+          // 递归调用
+          if (Array.isArray(item) && item.length > 0) {
+            return item.map((itemChild, j) => mapFormItems(itemChild, j))
+          }
           const defaultSpan = vm.option.itemSpan || 24
           let formItem
           if (item.name) {
@@ -368,7 +372,7 @@ const formCreator = (formCreatorConfig) => {
               span: item.span || defaultSpan
             },
             // 提升渲染准确性
-            key: i,
+            key: i + (item.name || ''),
           }, [formItem])
         }
         return this.fields.map((item, index) => {
