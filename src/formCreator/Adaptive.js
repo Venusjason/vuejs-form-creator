@@ -10,6 +10,7 @@ const element = {
   Radio: 'el-radio',
   CheckboxGroup: 'el-checkbox-group',
   Checkbox: 'el-checkbox',
+  Button: 'el-button',
 }
 
 const iview = {
@@ -24,6 +25,7 @@ const iview = {
   Radio: 'Radio',
   CheckboxGroup: 'CheckboxGroup',
   Checkbox: 'Checkbox',
+  Button: 'i-button',
 }
 
 export default {

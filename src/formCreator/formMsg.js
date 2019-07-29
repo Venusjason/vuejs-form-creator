@@ -1,5 +1,5 @@
 export default {
-  name: 'form-msg',
+  name: 'form-msg-helper',
   props: {
     model: {
       type: [Object, Array],
@@ -31,11 +31,11 @@ export default {
       'z-index': 100000001,
       top: 0,
       right: 0,
-      width: '300px',
-      height: '300px',
+      maxWidth: '300px',
+      // height: '300px',
       background: 'rgb(236, 251, 240)',
       'over-flow': 'scroll',
-      opacity: 0.6,
+      opacity: 0.9,
       padding: '20px',
       color: 'rgb(0, 0, 0)',
     }

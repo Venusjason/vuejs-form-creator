@@ -4,11 +4,13 @@
     v-model="formValidate"
     :option="options"
     :fields="fields"
+    @submit="submitForm"
+    @cancel="cancel"
     ref="FormCreator"
   />
-  <div style="padding-left: 100px;">
+  <!-- <div style="padding-left: 100px;">
     <Button type="primary" @click="submit">提交</Button>
-  </div>
+  </div> -->
 </div>
 </template>
 <script>
@@ -27,6 +29,7 @@ export default {
         autoAuffix: true,
         itemSpan: 16,
         debug: true,
+        buttonGroup: true,
       },
       formValidate: {
         name: '',
@@ -141,6 +144,15 @@ export default {
       this.$refs.FormCreator.getFormRef().validate(valid => {
         console.log(valid, this.formValidate)
       })
+    },
+    submitForm(form) {
+      const { validate } = form
+      validate(valid => {
+        console.log(valid)
+      })
+    },
+    cancel() {
+      console.log('取消')
     },
   },
 }

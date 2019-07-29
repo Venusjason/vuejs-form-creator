@@ -23,7 +23,7 @@
                 </Col>
                 <Col span="2" style="text-align: center">-</Col>
                 <Col span="11">
-                    <FormItem prop="time" label-width="0" >
+                    <FormItem prop="time" :label-width="0" >
                         <TimePicker type="time" placeholder="Select time" v-model="formValidate.time"></TimePicker>
                     </FormItem>
                 </Col>
