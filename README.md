@@ -39,6 +39,8 @@ module.exports = {
 v-model | 表单值（对应el-form model）| object
 option | el-form 配置透传，除了disabled以外,详见 option| object
 fields | 表单域数组 | Array( item 可以是object 或 array )
+@submit | options.buttonGroup 为true时,提交点击| function(form)
+@cancel | options.buttonGroup 为true时,取消点击 | 
 
 > form-creator 对外暴露一个 getFormRef() 来返回el-form的ref
 
@@ -48,8 +50,10 @@ fields | 表单域数组 | Array( item 可以是object 或 array )
 ---|--- |--- |--- |---
 status | 代替disabled(boolean)| string |edit、disabled、 preview| edit
 debug | boolean, 快捷调试入口 | boolean | - | false
-autoAuffix | el-form-item label 后缀自动补齐(如： '姓名' -> '姓名：') | boolean | - | false
+autoAuffix(后续会使用colon替代) | el-form-item label 后缀自动补齐(如： '姓名' -> '姓名：') | boolean | - | false
+colon | 是否自动补齐label冒号 | boolean | - | false
 itemSpan | formItem span全局参数,优先级itemSpan < formItem.span | number | 0~24 | 24
+buttonGroup | 表单 submit、cancel按钮组合| boolean/function| true/false,function 返回按钮数组| false
 
 #### fields item api
 
@@ -79,7 +83,14 @@ item| 对应el-form-item 属性透传，(prop 对应 name, 不需要再声明pro
 
 ```
 import VueFormCreator from '@yowant/vue-form-creator'
-Vue.use(VueFormCreator, 'iview')// 第二个人参数传 'iview' 或 'element'
+Vue.use(VueFormCreator, {
+    // 默认使用element-ui,可不填写,可选element、iview
+  ui: 'element',
+  // 默认在开发模式开启表单debug, 可不填写
+  debug: process.env.NODE_ENV === 'development', 可不填写
+  // 组件名默认 form-creator, 可不填
+  name: 'form-creator',
+})
 ```
 
 
@@ -101,8 +112,10 @@ export default {
             options: {
                 'label-width': '100px',
                 inline: false,
+                colon: true,
+                buttonGroup: true, // 默认false
                 status: 'edit', // 表单状态 edit disabled preview
-                debug: process.env.NODE_ENV === 'development',
+                debug: process.env.NODE_ENV === 'development', // 高于全局优先级
             },
             formData: {
                 title: '标题',

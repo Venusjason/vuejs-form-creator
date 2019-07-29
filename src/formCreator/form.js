@@ -1,7 +1,11 @@
 import formMsg from './formMsg'
 import Adaptive from './Adaptive'
 
-// v0.6.0
+const pkg = require('../../package.json')
+
+const { version } = pkg
+
+const versions = version.split('.').map(ele => Number(ele))
 
 const getArrKey = (str) => {
   // goods[0].id => goods.0.id
@@ -13,7 +17,7 @@ const getArrKey = (str) => {
 const formCreator = (formCreatorConfig) => {
   const UI = Adaptive[formCreatorConfig.ui]
   return {
-    name: 'form-creator',
+    name: formCreatorConfig.name || 'form-creator',
     props: {
       value: {
         type: Object,
@@ -68,6 +72,11 @@ const formCreator = (formCreatorConfig) => {
     render (h) {
       const vm = this
       const { status, debug, ...rest } = vm.option
+      // debug模式 表单配置优先级高于全局配置
+      const isDebug = debug ? debug : formCreatorConfig.debug
+
+      const renderFormItems = vm.renderFormItems(h) || []
+
       const elForm = h(
         UI.Form,
         {
@@ -80,7 +89,7 @@ const formCreator = (formCreatorConfig) => {
         },
         [
           ...(vm.$slots.prepend || []),
-          ...(vm.renderFormItems(h) || []),
+          ...(renderFormItems),
           ...(vm.$slots.append || []),
         ]
       )
@@ -88,7 +97,7 @@ const formCreator = (formCreatorConfig) => {
       return h('div', {}, [
         elForm,
         // 开发环境 提供表单值查看功能
-        debug && (h(formMsg, {
+        isDebug && (h(formMsg, {
           props: {
             model: vm.formValues
           },
@@ -331,6 +340,10 @@ const formCreator = (formCreatorConfig) => {
         }
         const { label: formItemLabel, ...labelrest } = label // 这是item字段
         const labelStr = formItemLabel || itemLabel || ''
+        const { colon, autoAuffix } = vm.option
+        if (autoAuffix) {
+          console.warn('autoAuffix 后续版本会删除，请使用 colon 替代')
+        }
         return h(
           UI.FormItem,
           {
@@ -339,7 +352,7 @@ const formCreator = (formCreatorConfig) => {
             props: {
               rules,
               size,
-              label: labelStr + ((labelStr && vm.option.autoAuffix) ? '：' : ''),
+              label: labelStr + ((labelStr && (colon || autoAuffix)) ? '：' : ''),
               prop: name,
               ...labelrest
             },
@@ -351,6 +364,29 @@ const formCreator = (formCreatorConfig) => {
             ...formItemScopedSlots,
           ]
         )
+      },
+      onSubmit() {
+        const Form = this.$refs.form
+        this.$emit('submit', Form)
+      },
+      onCancel() {
+        this.$emit('cancel')
+      },
+      // 渲染表单 取消、提交按钮
+      renderButtonGroup() {
+        const { status } = this.option
+        const Btns = [
+          (
+            <UI.Button onClick={this.onCancel} style={{marginRight: '10px'}} >取消</UI.Button>
+          ),
+          (
+            <UI.Button type="primary" onClick={this.onSubmit} disabled={ status === 'disabled' }>提交</UI.Button>
+          ),
+        ]
+        if (status === 'preview') {
+          Btns.pop()
+        }
+        return Btns
       },
 
       renderFormItems (h) {
@@ -375,7 +411,7 @@ const formCreator = (formCreatorConfig) => {
             key: i + (item.name || ''),
           }, [formItem])
         }
-        return this.fields.map((item, index) => {
+        const fields = this.fields.map((item, index) => {
           if (item === null) return null
           if (Array.isArray(item) && item.length > 0) {
             const formItem = item.map((itemChild, i) => mapFormItems(itemChild, i))
@@ -397,6 +433,20 @@ const formCreator = (formCreatorConfig) => {
             key: index,
           }, [formItem])
         })
+        // 增加 ButtonGroup 渲染
+        if (vm.option.buttonGroup) { // true false 自定义function
+          const renderButtonGroup = typeof vm.option.buttonGroup === 'function' ? vm.option.buttonGroup() : vm.renderButtonGroup()
+          fields.push(h(UI.Row, {
+            key: fields.length + 1,
+          }), [
+            h(
+              UI.FormItem,
+              {},
+              [...renderButtonGroup],
+            )
+          ])
+        }
+        return fields
       }
     },
   }
