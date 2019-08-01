@@ -1,12 +1,6 @@
 import formMsg from './formMsg'
 import Adaptive from './Adaptive'
 
-const pkg = require('../../package.json')
-
-const { version } = pkg
-
-const versions = version.split('.').map(ele => Number(ele))
-
 const getArrKey = (str) => {
   // goods[0].id => goods.0.id
   const str1 = str.replace(/\[(\w+)\]/g, '.$1').replace(/^\./, '')
@@ -391,12 +385,13 @@ const formCreator = (formCreatorConfig) => {
 
       renderFormItems (h) {
         const vm = this
-        const mapFormItems = (item, i) => {
+        const defaultSpan = vm.option.itemSpan
+        const defaultGutter = vm.option.itemGutter || 0
+        const mapFormItems = (item, i, l) => {
           // 递归调用
           if (Array.isArray(item) && item.length > 0) {
-            return item.map((itemChild, j) => mapFormItems(itemChild, j))
+            return item.map((itemChild, j) => mapFormItems(itemChild, j, item.length))
           }
-          const defaultSpan = vm.option.itemSpan || 24
           let formItem
           if (item.name) {
             formItem = vm.renderFormItem(h, item)
@@ -405,7 +400,7 @@ const formCreator = (formCreatorConfig) => {
           }
           return h(UI.Col, {
             props: {
-              span: item.span || defaultSpan
+              span: item.span || defaultSpan || Math.floor(24 / l)
             },
             // 提升渲染准确性
             key: i + (item.name || ''),
@@ -414,10 +409,10 @@ const formCreator = (formCreatorConfig) => {
         const fields = this.fields.map((item, index) => {
           if (item === null) return null
           if (Array.isArray(item) && item.length > 0) {
-            const formItem = item.map((itemChild, i) => mapFormItems(itemChild, i))
+            const formItem = item.map((itemChild, i) => mapFormItems(itemChild, i, item.length))
             return h(UI.Row, {
               props: {
-                gutter: item[0].gutter || 0,
+                gutter: item[0].gutter || defaultGutter,
               },
               // 提升渲染准确性
               key: index,
@@ -427,7 +422,7 @@ const formCreator = (formCreatorConfig) => {
             return null
           }
           // el-row el-col span
-          const formItem = mapFormItems(item)
+          const formItem = mapFormItems(item, index, 1)
           return h(UI.Row, {
             // 提升渲染准确性
             key: index,

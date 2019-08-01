@@ -1,3 +1,9 @@
+### 0.9.0
+- fixed
+ - 修复pkg bug
+- added
+ - 增加默认宽度，表单itemGutter配置
+
 ### 0.7.0 | 0.8.0
 - added
  - 全局配置增加 debug、组件name
