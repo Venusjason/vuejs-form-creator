@@ -39,7 +39,7 @@ export default {
         interest: [],
         date: '',
         time: '',
-        desc: ''
+        desc: '',
       },
     }
   },
@@ -138,7 +138,17 @@ export default {
       ]
     },
   },
-  mounted () {},
+  mounted () {
+    const vals = [1, 2, 3, 4, 5].map(key => ({
+      name: null,
+      age: null,
+      height: null,
+      class: null,
+      width: null,
+      index: key,
+    }))
+    Object.assign(this.formValidate, { vals })
+  },
   methods: {
     submit() {
       this.$refs.FormCreator.getFormRef().validate(valid => {

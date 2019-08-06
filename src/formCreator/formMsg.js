@@ -1,3 +1,7 @@
+import {jsonView} from 'jsonview-vue'
+
+let zIndex = 999999
+
 export default {
   name: 'form-msg-helper',
   props: {
@@ -6,6 +10,9 @@ export default {
       default: () => {},
     },
   },
+  // components: {
+  //   JsonView
+  // },
 
   data() {
     return {
@@ -15,29 +22,29 @@ export default {
 
   render(h) {
 
+    const dialogStyle = {
+      position: 'fixed',
+      'z-index': zIndex++,
+      top: 0,
+      right: 0,
+      maxWidth: '300px',
+      maxHeight: '300px',
+      background: 'rgb(236, 251, 240)',
+      overflow: 'scroll',
+      opacity: 0.9,
+      padding: '20px',
+      color: 'rgb(0, 0, 0)',
+    }
+
     const bottonStyle = {
       padding: '2px 4px',
       position: 'fixed',
-      'z-index': 100000002,
+      'z-index': zIndex++,
       top: '10px',
       right: '10px',
       cursor: 'pointer',
       background: '#2d8cf0',
       color: '#fff',
-    }
-
-    const dialogStyle = {
-      position: 'fixed',
-      'z-index': 100000001,
-      top: 0,
-      right: 0,
-      maxWidth: '300px',
-      // height: '300px',
-      background: 'rgb(236, 251, 240)',
-      'over-flow': 'scroll',
-      opacity: 0.9,
-      padding: '20px',
-      color: 'rgb(0, 0, 0)',
     }
 
     return (
@@ -48,7 +55,7 @@ export default {
         {
           this.showVal && (
             <div style={dialogStyle} >
-              <pre>{JSON.stringify(this.model, null, 2)}</pre>
+              <jsonView json={this.model}/>
             </div>
           )
         }
