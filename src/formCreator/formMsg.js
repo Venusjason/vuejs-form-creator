@@ -1,4 +1,5 @@
-import {jsonView} from 'jsonview-vue'
+// import {jsonView} from 'jsonview-vue'
+const { jsonView } = require('jsonview-vue')
 
 let zIndex = 999999
 

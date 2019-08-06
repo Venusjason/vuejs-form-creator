@@ -1,3 +1,11 @@
+### 0.10.0
+- fixed
+ - 多级数组结构嵌套，row渲染不对导致布局无法换行问题
+- added
+ - vue文件中jsx形式component 可以不用写h函数了（也可以沿用以前写法）
+- changed
+ - json view展示控件优化
+
 ### 0.9.0
 - fixed
  - 修复pkg bug

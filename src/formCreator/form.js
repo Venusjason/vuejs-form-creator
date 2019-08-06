@@ -16,6 +16,13 @@ const GetObjectLength =  (arr) => {
   }, 0)
 }
 
+// 为了兼容在vue文件中写jsx component 0.9.0版本前需要加H 函数，之后不需要
+const renderComponent = (component, h) => {
+  const type = typeof component
+  // function是需要传递H函数，object可以在内部调用h
+  return type === 'function' ? component(h) : component
+}
+
 const formCreator = (formCreatorConfig) => {
   const UI = Adaptive[formCreatorConfig.ui]
   return {
@@ -195,7 +202,7 @@ const formCreator = (formCreatorConfig) => {
             children = [h(component, componentProps, scopedSlots)]
           } else {
             // 无意义的表单元素 纯展示
-            children = [component(h)]
+            children = [renderComponent(component, h)]
           }
         } else {
           if (tag === UI.Select) {
@@ -409,7 +416,7 @@ const formCreator = (formCreatorConfig) => {
           if (item.name) {
             formItem = vm.renderFormItem(h, item)
           } else { // 不对应表单字段
-            formItem = item.component(h)
+            formItem = renderComponent(item.component, h)
           }
           return h(UI.Col, {
             props: {

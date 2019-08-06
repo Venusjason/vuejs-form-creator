@@ -8,20 +8,22 @@
     @cancel="cancel"
     ref="FormCreator"
   />
+  <UserUpload v-model="value" />{{value}}
   <!-- <div style="padding-left: 100px;">
     <Button type="primary" @click="submit">提交</Button>
   </div> -->
 </div>
 </template>
 <script>
-// import FormCreator from './../FormCreator'
+import UserUpload from './user-upload'
 
 export default {
   components: {
-    // FormCreator,
+    UserUpload,
   },
   data () {
     return {
+      value: '1',
       options: {
         'label-width': 100,
         inline: false,
@@ -40,6 +42,7 @@ export default {
         date: '',
         time: '',
         desc: '',
+        value: '',
       },
     }
   },
@@ -77,9 +80,7 @@ export default {
             { required: true, message: 'Please select the city', trigger: 'change' }
           ],
         }, {
-          component: h=> (
-            <span>jkjk</span>
-          )
+          name: 'value', component: UserUpload, label: '自定义',
         }],
         [{
           tag: 'DatePicker',
@@ -89,7 +90,7 @@ export default {
           placeholder: 'Select date',
           label: 'Date',
         },{
-          component: (h) => (<Col style="text-align: center">-</Col>),
+          component: (<Col style="text-align: center">-试试</Col>),
           span: 2,
         },{
           tag: 'TimePicker',
