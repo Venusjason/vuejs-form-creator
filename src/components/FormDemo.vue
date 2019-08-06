@@ -27,7 +27,7 @@ export default {
         inline: false,
         status: 'edit',
         autoAuffix: true,
-        itemSpan: 16,
+        // itemSpan: 16,
         debug: true,
         buttonGroup: true,
       },
@@ -46,8 +46,7 @@ export default {
   computed: {
     fields() {
       return [
-        {
-          span: 24,
+        [[{
           label: 'Name',
           name: 'name',
           placeholder: 'Enter your name',
@@ -63,7 +62,7 @@ export default {
             { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
             { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
           ],
-        },
+        }],
         {
           tag: 'Select',
           label: 'city',
@@ -77,7 +76,11 @@ export default {
           rules: [
             { required: true, message: 'Please select the city', trigger: 'change' }
           ],
-        },
+        }, {
+          component: h=> (
+            <span>jkjk</span>
+          )
+        }],
         [{
           tag: 'DatePicker',
           name: 'date',

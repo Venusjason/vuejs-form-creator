@@ -8,6 +8,14 @@ const getArrKey = (str) => {
   return arr
 }
 
+const GetObjectLength =  (arr) => {
+  return arr.reduce((total, currentItem) => {
+    const type = Object.prototype.toString.call(currentItem)
+    const addVal = type === '[object Array]' ? 0 : 1
+    return total + addVal
+  }, 0)
+}
+
 const formCreator = (formCreatorConfig) => {
   const UI = Adaptive[formCreatorConfig.ui]
   return {
@@ -390,7 +398,12 @@ const formCreator = (formCreatorConfig) => {
         const mapFormItems = (item, i, l) => {
           // 递归调用
           if (Array.isArray(item) && item.length > 0) {
-            return item.map((itemChild, j) => mapFormItems(itemChild, j, item.length))
+            const l1 = GetObjectLength(item)
+            const arrChild = item.map((itemChild, j) => mapFormItems(itemChild, j, l1))
+            return h(UI.Row, {
+              // 提升渲染准确性
+              key: i + l1,
+            }, [...arrChild])
           }
           let formItem
           if (item.name) {
@@ -409,7 +422,8 @@ const formCreator = (formCreatorConfig) => {
         const fields = this.fields.map((item, index) => {
           if (item === null) return null
           if (Array.isArray(item) && item.length > 0) {
-            const formItem = item.map((itemChild, i) => mapFormItems(itemChild, i, item.length))
+            const l = GetObjectLength(item)
+            const formItem = item.map((itemChild, i) => mapFormItems(itemChild, i, l))
             return h(UI.Row, {
               props: {
                 gutter: item[0].gutter || defaultGutter,
