@@ -73,10 +73,12 @@ gutter | 可选参数,布局 对应el-row, 只在config item 为Array时配置�
 span | 可选参数,布局 对应el-col
 item| 对应el-form-item 属性透传，(prop 对应 name, 不需要再声明prop)| object| | {label: ''}
 
-##### 在component/scopedSlots中 组件书写方式
+##### 在component/scopedSlots中 组件书写方式(0.10.0之前版本)
 
 - component: import 过来以.vue结尾的，以jsx functional component 实现的，直接写变量; 
 - scopedSlots: 要以jsx形式书写 `h => jsx component`
+
+> 0.10.0以后的版本不需要再写 h 函数了（可选）
 
 ##### example
 
@@ -97,10 +99,10 @@ Vue.use(VueFormCreator, {
 
 ```
 <template>
-<FormCreator 
+<form-creator 
   v-model="formData"
-  :option="options"
-  :fields="formConfig"
+  :option="option"
+  :fields="fields"
 />
 </template>
 
@@ -110,7 +112,7 @@ Vue.use(VueFormCreator, {
 export default {
     data() {
         return {
-            options: {
+            option: {
                 'label-width': '100px',
                 inline: false,
                 colon: true,
@@ -129,7 +131,7 @@ export default {
         }
     },
     computed: {
-        formConfig() {
+        fields() {
             return [
                 {
                     item: {// el-form-item

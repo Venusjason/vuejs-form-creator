@@ -181,7 +181,7 @@ const formCreator = (formCreatorConfig) => {
 
         let children = []
         // 自定义slot实现
-        const scopedSlots = (detail.scopedSlots || []).map(ele => ele(h))
+        const scopedSlots = (detail.scopedSlots || []).map(ele => renderComponent(ele, h))
         if (component) {
           // 自定义表单控件渲染逻辑
           if (name) {
