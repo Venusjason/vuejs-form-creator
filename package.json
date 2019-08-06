@@ -1,6 +1,6 @@
 {
   "name": "vuejs-form-creator",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "vue json form 生成器, 适配element iview",
   "private": false,
   "main": "lib/index.js",
