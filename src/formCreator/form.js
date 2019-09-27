@@ -157,6 +157,10 @@ const formCreator = (formCreatorConfig) => {
         style: detailStyle = {},
         ...detail
       }) {
+        // 防止表单控件 超出边界,设置 默认 maxWidth: '100%'
+        if (!detailStyle.maxWidth) {
+          detailStyle.maxWidth = '100%'
+        }
         if (tag && component) {
           console.error('tag 与 component不可同时使用')
           return null
@@ -340,8 +344,7 @@ const formCreator = (formCreatorConfig) => {
           }
         }
 
-        const formItemStyle = { maxWidth: '100%' } // 防止表单控件 超出边界
-        Object.assign(formItemStyle, (label.style || {}))
+        const formItemStyle = label.style || {}
         const formItemClass = label.class || {}
         const formItemScopedSlots = (label.scopedSlots || []).map(ele => ele(h))
         let formItemChildren = []
