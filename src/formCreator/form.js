@@ -146,8 +146,15 @@ const formCreator = (formCreatorConfig) => {
       },
 
       renderFormItem (h, {
-        tag, component, rules, previewFormItemValue, label: itemLabel,
-        item: label = {}, class: detailClass = {}, style: detailStyle = {},
+        tag,
+        component,
+        rules,
+        previewFormItemValue,
+        formItemStatus,
+        label: itemLabel,
+        item: label = {},
+        class: detailClass = {},
+        style: detailStyle = {},
         ...detail
       }) {
         if (tag && component) {
@@ -178,7 +185,6 @@ const formCreator = (formCreatorConfig) => {
           // 表单联动可以在自定义on里处理
           ...detail.on || {}
         }
-
         let children = []
         // 自定义slot实现
         const scopedSlots = (detail.scopedSlots || []).map(ele => renderComponent(ele, h))
@@ -339,7 +345,9 @@ const formCreator = (formCreatorConfig) => {
         const formItemScopedSlots = (label.scopedSlots || []).map(ele => ele(h))
         let formItemChildren = []
         // 表单预览态
-        if (vm.option.status === 'preview') {
+        // 增加 formItemStatus 字段，优先级高于 option.status，便于表单部分字段特殊状态处理
+        const formItemStatus1 = formItemStatus || vm.option.status || 'edit'
+        if (formItemStatus1 === 'preview') {
           formItemChildren = previewText
           if (previewFormItemValue) {
             formItemChildren = previewFormItemValue(value, h)
@@ -413,10 +421,25 @@ const formCreator = (formCreatorConfig) => {
             }, [...arrChild])
           }
           let formItem
+          // 值为null的情况
+          if (!item) return item
           if (item.name) {
             formItem = vm.renderFormItem(h, item)
-          } else { // 不对应表单字段
+          } else if (item.component) { // 不对应表单字段
             formItem = renderComponent(item.component, h)
+          } else if (item.formItemComponent) { // 不对应表单字段
+            formItem = h(
+              UI.FormItem,
+              {
+                props: {
+                  label: '',
+                  'label-width': 0,
+                },
+                // 提升渲染准确性
+                key: i,
+              },
+              [renderComponent(item.formItemComponent, h)]
+            )
           }
           return h(UI.Col, {
             props: {

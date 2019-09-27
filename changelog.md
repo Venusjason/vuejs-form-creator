@@ -1,3 +1,8 @@
+### 0.12.0
+- added
+ - 增加 formItemStatus 字段，优先级高于 option.status，便于表单部分字段特殊状态处理
+ - 增加 formItemComponent 字段，便于展示 formItem 下 component样式对齐,这样component使用场景更适合于name搭配的自定义form控件
+
 ### 0.10.0
 - fixed
  - 多级数组结构嵌套，row渲染不对导致布局无法换行问题

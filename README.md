@@ -62,9 +62,11 @@ buttonGroup | 表单 submit、cancel按钮组合| boolean/function| true/false,f
 ---|--- |--- |--- |---
 tag | 标签, 与component不同时使用| string | - | el-input
 component | 组件，适用于自定义表单控件值 | function | - | -
+formItemComponent（0.12.0） | 组件,适用纯ui展示 | function | - | -
 label | label展示值,同下item(label),优先级 label < item.label
 name | 表单对应字段 | string | - | -
 options| select checkbox-group时使用 | {label: '', value: ''}[] | 
+formItemStatus （0.12.0） | 优先级高于 option.status，便于表单部分字段特殊状态处理 | string | edit、preview | edit
 previewFormItemValue| 可选参数,当option.status 为preview时生效,展示文字自定义 | - | (value, h) => value| form[name]
 scopedSlots | 可选参数,动态slot，必须使用h函数 | jsx component[]
 on | 控件事件透传，在需要做字段联动时使用| object

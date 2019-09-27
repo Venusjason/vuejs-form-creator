@@ -28,7 +28,7 @@ export default {
         'label-width': 100,
         inline: false,
         status: 'edit',
-        autoAuffix: true,
+        colon: true,
         // itemSpan: 16,
         debug: true,
         buttonGroup: true,
@@ -53,6 +53,7 @@ export default {
           label: 'Name',
           name: 'name',
           placeholder: 'Enter your name',
+          // formItemStatus: 'edit',
           rules: [
             { required: true, message: 'The name cannot be empty', trigger: 'blur' }
           ],
@@ -66,6 +67,7 @@ export default {
             { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
           ],
         }],
+        // null,
         {
           tag: 'Select',
           label: 'city',
@@ -90,7 +92,7 @@ export default {
           placeholder: 'Select date',
           label: 'Date',
         },{
-          component: (<Col style="text-align: center">-试试</Col>),
+          formItemComponent: () => (<span style="text-align: center">formItemComponent</span>),
           span: 2,
         },{
           tag: 'TimePicker',
