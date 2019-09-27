@@ -340,7 +340,8 @@ const formCreator = (formCreatorConfig) => {
           }
         }
 
-        const formItemStyle = label.style || {}
+        const formItemStyle = { maxWidth: '100%' } // 防止表单控件 超出边界
+        Object.assign(formItemStyle, (label.style || {}))
         const formItemClass = label.class || {}
         const formItemScopedSlots = (label.scopedSlots || []).map(ele => ele(h))
         let formItemChildren = []

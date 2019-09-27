@@ -1,3 +1,7 @@
+### 0.13.0
+- fix
+  - 防止表单控件 超出边界,设置 默认 maxWidth: '100%'
+
 ### 0.12.0
 - added
  - 增加 formItemStatus 字段，优先级高于 option.status，便于表单部分字段特殊状态处理
