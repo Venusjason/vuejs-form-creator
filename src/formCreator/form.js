@@ -25,6 +25,27 @@ const renderComponent = (component, h) => {
 
 const formCreator = (formCreatorConfig) => {
   const UI = Adaptive[formCreatorConfig.ui]
+
+  const computedRules = (rules, label = '此项', tag = UI.Input) => {
+    const rulesType = Object.prototype.toString.call(rules)
+    const selectStrTags = [
+      UI.Select, UI.RadioGroup, UI.Radio, UI.CheckboxGroup, UI.Checkbox,
+    ]
+    let rulesClone = rules || []
+    if (rulesType !== '[object Array]' && rules) {
+      rulesClone = [rules]
+    }
+    return rulesClone.map(rule => {
+      if (rule === 'required') {
+        const str = selectStrTags.indexOf(tag) > -1 ? '请选择' : '请填写'
+        return {
+          required: true, message: `${str + label}`
+        }
+      }
+      return rule
+    })
+  }
+
   return {
     name: formCreatorConfig.name || 'form-creator',
     props: {
@@ -103,7 +124,11 @@ const formCreator = (formCreatorConfig) => {
         ]
       )
 
-      return h('div', {}, [
+      return h('div', {
+        style: {
+          position: 'relative',
+        }
+      }, [
         elForm,
         // 开发环境 提供表单值查看功能
         isDebug && (h(formMsg, {
@@ -371,7 +396,7 @@ const formCreator = (formCreatorConfig) => {
             style: formItemStyle,
             class: formItemClass,
             props: {
-              rules,
+              rules: computedRules(rules, labelStr, tag),
               size,
               label: labelStr + ((labelStr && (colon || autoAuffix)) ? '：' : ''),
               prop: name,

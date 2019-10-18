@@ -38,19 +38,23 @@ export default {
     }
 
     const bottonStyle = {
-      padding: '2px 4px',
-      position: 'fixed',
-      'z-index': zIndex++,
-      top: '10px',
-      right: '10px',
+      // padding: '2px 4px',
+      // position: 'fixed',
+      // 'z-index': zIndex++,
+      // top: '10px',
+      // right: '10px',
       cursor: 'pointer',
       background: '#2d8cf0',
       color: '#fff',
     }
 
     return (
-      <div>
-        <button style={bottonStyle} onClick={() => this.showVal = !this.showVal}>{
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        right: 0,
+      }}>
+        <button style={bottonStyle} onClick={() => {this.showVal = !this.showVal}}>{
           this.showVal ? '关闭' : '表单值'
         }</button>
         {

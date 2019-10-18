@@ -8,7 +8,7 @@
     @cancel="cancel"
     ref="FormCreator"
   />
-  <UserUpload v-model="value" />{{value}}
+  <!-- <UserUpload v-model="value" />{{value}} -->
   <!-- <div style="padding-left: 100px;">
     <Button type="primary" @click="submit">提交</Button>
   </div> -->
@@ -16,10 +16,11 @@
 </template>
 <script>
 import UserUpload from './user-upload'
+import { maxDecimal2, email } from './../formCreator/rules'
 
 export default {
   components: {
-    UserUpload,
+    // UserUpload,
   },
   data () {
     return {
@@ -54,17 +55,15 @@ export default {
           name: 'name',
           placeholder: 'Enter your name',
           // formItemStatus: 'edit',
-          rules: [
-            { required: true, message: 'The name cannot be empty', trigger: 'blur' }
-          ],
+          rules: maxDecimal2,
         },
         {
           label: 'mail',
           name: 'mail',
           placeholder: 'Enter your e-mail',
           rules: [
-            { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
-            { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
+            // 'required',
+            email,
           ],
         }],
         // null,
@@ -79,10 +78,11 @@ export default {
             { label: 'Sydney', value: 'shenzhen' },
           ],
           rules: [
-            { required: true, message: 'Please select the city', trigger: 'change' }
+            'required',
           ],
         }, {
           name: 'value', component: UserUpload, label: '自定义',
+          rules: ['required'],
         }],
         [{
           tag: 'DatePicker',
@@ -91,19 +91,21 @@ export default {
           span: 11,
           placeholder: 'Select date',
           label: 'Date',
+          rules: 'required',
         },{
           formItemComponent: () => (<span style="text-align: center">formItemComponent</span>),
-          span: 2,
+          span: 6, rules: ['required'],
         },{
           tag: 'TimePicker',
           name: 'time',
           type: 'time',
-          span: 10,
+          span: 6,
           placeholder: 'Select time',
           item: {
             label: '',
-            'label-width': 0,
+            'labelWidth': 0,
           },
+          rules: ['required'],
         }],
         {
           tag: 'RadioGroup',
@@ -113,7 +115,7 @@ export default {
             { label: 'Female', value: 'female' },
           ],
           rules: [
-            { required: true, message: 'Please select gender', trigger: 'change' }
+            'required'
           ],
           label: 'Gender',
         },
@@ -127,7 +129,7 @@ export default {
             { label: 'Movie', value: 'Movie' },
           ],
           rules: [
-            { required: true, type: 'array', min: 1, message: 'Choose at least one hobby', trigger: 'change' },
+            'required',
             { type: 'array', max: 2, message: 'Choose two hobbies at best', trigger: 'change' }
           ],
           label: 'Hobby',
@@ -157,9 +159,9 @@ export default {
   },
   methods: {
     submit() {
-      this.$refs.FormCreator.getFormRef().validate(valid => {
-        console.log(valid, this.formValidate)
-      })
+      // this.$refs.FormCreator.getFormRef().validate(valid => {
+      //   // console.log(valid, this.formValidate)
+      // })
     },
     submitForm(form) {
       const { validate } = form
@@ -168,7 +170,7 @@ export default {
       })
     },
     cancel() {
-      console.log('取消')
+      // console.log('取消')
     },
   },
 }
