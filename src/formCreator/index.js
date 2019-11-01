@@ -1,4 +1,4 @@
-import formCreator from './form.js'
+import formCreator from './createForm'
 
 const install = (Vue, options = {}) => {
   if (install.installed) return

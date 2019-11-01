@@ -462,7 +462,7 @@ const formCreator = (formCreatorConfig) => {
               {
                 props: {
                   label: '',
-                  'label-width': 0,
+                  // 'label-width': '0px' || 0,
                 },
                 // 提升渲染准确性
                 key: i,

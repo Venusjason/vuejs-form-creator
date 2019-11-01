@@ -3,20 +3,25 @@
     iview ui 左侧是传统方式form, 右侧是FormCreator方案
     <div class="forms">
       <FormBase class="form-test" />
-      <FormDemo class="form-test"/>
+    </div>
+    <div class="forms">
+      <FormIview class="form-test"/>
+      <FormElement class="form-test" />
     </div>
   </div>
 </template>
 
 <script>
-import FormDemo from './components/FormDemo'
+import FormIview from './components/FormIview'
 import FormBase from './components/FormBase'
+import FormElement from './components/FormElement'
 
 export default {
   name: 'app',
   components: {
-    FormDemo,
+    FormIview,
     FormBase,
+    FormElement,
   }
 }
 </script>
