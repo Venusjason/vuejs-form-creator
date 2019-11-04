@@ -70,30 +70,34 @@ export default {
         },
         [
           [
-            [{
-              label: 'Name',
-              name: 'name',
-              placeholder: 'Enter your name',
-              // formItemStatus: 'edit',
-              rules: maxDecimal2,
-              gutter: 10,
-              style: {
-                maxWidth: '50%',
+            [
+              () => {
+                return this.formValidate.city === 'beijing' ? {
+                  label: 'Name',
+                  name: 'name',
+                  placeholder: 'Enter your name',
+                  // formItemStatus: 'edit',
+                  rules: maxDecimal2,
+                  gutter: 10,
+                  style: {
+                    maxWidth: '50%',
+                  },
+                  item: {
+                    // append: <span>append</span>,
+                    prepend: <span>prepend</span>,
+                  }
+                } : null
               },
-              item: {
-                // append: <span>append</span>,
-                prepend: <span>prepend</span>,
+              {
+                label: 'mail',
+                name: 'mail',
+                placeholder: 'Enter your e-mail',
+                rules: [
+                  // 'required',
+                  email,
+                ],
               }
-            },
-            {
-              label: 'mail',
-              name: 'mail',
-              placeholder: 'Enter your e-mail',
-              rules: [
-                // 'required',
-                email,
-              ],
-            }]
+            ]
           ],
           // null,
           [{
