@@ -1,6 +1,6 @@
 <template>
 <div>
-  <form-creator
+  <q-form
     v-model="formValidate"
     :option="options"
     :fields="fields"
@@ -61,20 +61,30 @@ export default {
           type: 'textarea',
           placeholder: 'Enter something...',
           autosize: {
-            minRows: 2,maxRows: 5
+            minRows: 2, maxRows: 5
           },
+          item: {
+            append: 'append',
+            prepend: 'prepend',
+          }
         },
         [
           [
-            [
-              {
-                label: 'Name',
-                name: 'name',
-                placeholder: 'Enter your name',
-                // formItemStatus: 'edit',
-                rules: maxDecimal2,
+            [{
+              label: 'Name',
+              name: 'name',
+              placeholder: 'Enter your name',
+              // formItemStatus: 'edit',
+              rules: maxDecimal2,
+              gutter: 10,
+              style: {
+                maxWidth: '50%',
               },
-            ],
+              item: {
+                // append: <span>append</span>,
+                prepend: <span>prepend</span>,
+              }
+            },
             {
               label: 'mail',
               name: 'mail',
@@ -83,7 +93,7 @@ export default {
                 // 'required',
                 email,
               ],
-            }
+            }]
           ],
           // null,
           [{

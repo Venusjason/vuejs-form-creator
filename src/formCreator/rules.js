@@ -35,17 +35,18 @@ export const regs = {
  */
 export const validatorFunc = (regRule) => {
   const [reg, message] = regRule
-  return (rule, val, callback) => {
+  const validator = (rule, val, callback) => {
     // 有输入值 并且输入值不合法
     if (val && !reg.test(val)) {
       callback(new Error(message))
     }
     callback()
   }
+  return { validator }
 }
 
 export const required = (label) => ({
-  required: true, message:  `${label}必填`,
+  required: true, message: `${label}必填`,
 })
 
 // 长度限制

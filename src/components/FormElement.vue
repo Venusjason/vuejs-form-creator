@@ -12,9 +12,9 @@
 </div>
 </template>
 <script>
-import FormCreatorFn from './../formCreator/createForm'
+import FormCreatorFn from '../formCreator/createForm'
 import UserUpload from './user-upload'
-import { maxDecimal2, email } from './../formCreator/rules'
+import { maxDecimal2, email } from '../formCreator/rules'
 
 const FormCreatorEle = FormCreatorFn({
   ui: 'element',

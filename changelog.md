@@ -1,3 +1,11 @@
+### 1.0.0
+- changed
+ - 仓库更名 qform
+ - 优化部分api: previewFormItemValue 等价于 previewValue
+ - 增加item api：prepend 、append便于在formItem的控件前后插值
+- refactor
+ - 重构 formItem渲染, 对key值重复的问题从内部设置不重复下标
+
 ### 0.14.0
 - added
  - 增加 rules 库，便于快速开发校验表单

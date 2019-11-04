@@ -1,4 +1,6 @@
-# vue-form-creator (element ui/ iview适配版本)
+# QForm (前身vue-form-creator) (element ui/ iview适配版本)
+
+> QForm 谐音 `kill form`, 表单大杀器帮助开发者迅速搞定vue生态（element-ui、iview）表单开发
 
 - el-form 在复杂表单上代码量较大
 - 动态校验表单项比较麻烦
@@ -32,7 +34,7 @@ module.exports = {
 > 注意：@vue/babel-preset-jsx默认会注入一个h语法糖，会与vue本身冲突，这个配置要设置false，否则项目启动会报错
 
 
-#### form-creator api
+#### qform api
 
 参数 | 说明 | 类型 
 ---|--- | ---
@@ -42,7 +44,7 @@ fields | 表单域数组 | Array( item 可以是object 或 array )
 @submit | options.buttonGroup 为true时,提交点击| function(form)
 @cancel | options.buttonGroup 为true时,取消点击 | 
 
-> form-creator 对外暴露一个 getFormRef() 来返回el-form的ref
+> qform 对外暴露一个 getFormRef() 来返回el-form的ref
 
 #### option api
 
@@ -67,7 +69,7 @@ label | label展示值,同下item(label),优先级 label < item.label
 name | 表单对应字段 | string | - | -
 options| select checkbox-group时使用 | {label: '', value: ''}[] | 
 formItemStatus （0.12.0） | 优先级高于 option.status，便于表单部分字段特殊状态处理 | string | edit、preview | edit
-previewFormItemValue| 可选参数,当option.status 为preview时生效,展示文字自定义 | - | (value, h) => value| form[name]
+previewValue/previewFormItemValue| 可选参数,当option.status 为preview时生效,展示文字自定义 | - | (value, h) => value| form[name]
 scopedSlots | 可选参数,动态slot，必须使用h函数 | jsx component[]
 on | 控件事件透传，在需要做字段联动时使用| object
 rules | 该字段校验规则,与el-form一致
@@ -87,21 +89,21 @@ item| 对应el-form-item 属性透传，(prop 对应 name, 不需要再声明pro
 - 全局引入
 
 ```
-import VueFormCreator from '@yowant/vue-form-creator'
-Vue.use(VueFormCreator, {
+import QFormCreator from 'q-form'
+Vue.use(QFormCreator, {
     // 默认使用element-ui,可不填写,可选element、iview
   ui: 'element',
   // 默认在开发模式开启表单debug, 可不填写
   debug: process.env.NODE_ENV === 'development', 可不填写
-  // 组件名默认 form-creator, 可不填
-  name: 'form-creator',
+  // 组件名默认 q-form, 可不填
+  name: 'q-form',
 })
 ```
 
 
 ```
 <template>
-<form-creator 
+<q-form
   v-model="formData"
   :option="option"
   :fields="fields"

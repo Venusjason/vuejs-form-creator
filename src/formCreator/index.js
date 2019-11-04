@@ -8,7 +8,7 @@ const install = (Vue, options = {}) => {
     // 默认在开发模式开启表单debug
     debug: process.env.NODE_ENV === 'development',
     // 组件名默认 form-creator
-    name: 'form-creator',
+    name: 'q-form',
   }
   if (typeof options === 'string') {
     options = {

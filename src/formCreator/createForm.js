@@ -37,7 +37,7 @@ const computedKeyProps = (key, isDebug = false) => {
   }
 }
 
-const getArrKey = (str) => {
+const getArrKey = (str, data) => {
   // goods[0].id => goods.0.id
   const str1 = str.replace(/\[(\w+)\]/g, '.$1').replace(/^\./, '')
   const arr = str1.split('.') // [goods, 0, id]
@@ -76,7 +76,7 @@ export default (formCreatorConfig) => {
   }
 
   return {
-    name: formCreatorConfig.name || 'form-creator',
+    name: formCreatorConfig.name || 'q-form',
     props: {
       value: {
         type: Object,
@@ -329,7 +329,7 @@ export default (formCreatorConfig) => {
           if (Object.prototype.hasOwnProperty.call(formValues, name)) {
             value = formValues[name]
           } else {
-            const arr123 = getArrKey(name, formValues)
+            const arr123 = getArrKey(name)
             if (arr123.length === 1) {
               value = formValues[arr123[0]]
             } else if (arr123.length === 2) {
@@ -349,6 +349,11 @@ export default (formCreatorConfig) => {
             if (Object.prototype.hasOwnProperty.call(formValues, name)) {
               formValues[name] = val
             } else {
+              /**
+               * TODO:
+               * 未在formValues 里声明的字段 触发值不一定对
+               * 需要尝试使用 this.$set
+               */
               let arr123 = getArrKey(name)
               if (arr123.length === 1) {
                 formValues[arr123[0]] = val

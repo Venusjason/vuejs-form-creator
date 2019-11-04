@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import App from './App.vue'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+import App from './App.vue'
 import FormCreator from './formCreator/index.js'
 
 Vue.config.productionTip = false
