@@ -3,6 +3,12 @@
  - 仓库更名 q-former
  - 优化部分api: previewFormItemValue 等价于 previewValue
  - 增加item api：prepend 、append便于在formItem的控件前后插值
+ - 优化 表单字段name未声明时，会引发undefined报错，导致难以调试
+ - 优化 开发时不需要刻意规避row内嵌套row元素引起的组件被遮盖问题
+
+- fix
+ - element iview写rule一致
+
 - refactor
  - 重构 formItem渲染, 对key值重复的问题从内部设置不重复下标
 
