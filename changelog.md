@@ -1,6 +1,6 @@
 ### 1.0.0
 - changed
- - 仓库更名 qform
+ - 仓库更名 q-former
  - 优化部分api: previewFormItemValue 等价于 previewValue
  - 增加item api：prepend 、append便于在formItem的控件前后插值
 - refactor

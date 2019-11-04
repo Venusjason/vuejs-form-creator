@@ -1,13 +1,13 @@
 {
-  "name": "qform",
+  "name": "q-former",
   "version": "1.0.0",
   "description": "vue json form 生成器, 适配element iview",
   "private": false,
   "main": "lib/index.js",
   "keywords": [
     "vue form",
-    "qform",
-    "Q-form",
+    "q-former",
+    "Q-former",
     "formCreator",
     "element",
     "iview"

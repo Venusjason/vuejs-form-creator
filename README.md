@@ -1,6 +1,6 @@
-# QForm (前身vue-form-creator) (element ui/ iview适配版本)
+# QFormer (前身vue-form-creator) (element ui/ iview适配版本)
 
-> QForm 谐音 `kill form`, 表单大杀器帮助开发者迅速搞定vue生态（element-ui、iview）表单开发
+> QFormer 谐音 `kill former`、`cute former`, 表单大杀器帮助开发者迅速搞定vue生态（element-ui、iview）表单开发
 
 - el-form 在复杂表单上代码量较大
 - 动态校验表单项比较麻烦
@@ -34,7 +34,7 @@ module.exports = {
 > 注意：@vue/babel-preset-jsx默认会注入一个h语法糖，会与vue本身冲突，这个配置要设置false，否则项目启动会报错
 
 
-#### qform api
+#### qformer api
 
 参数 | 说明 | 类型 
 ---|--- | ---
@@ -44,7 +44,7 @@ fields | 表单域数组 | Array( item 可以是object 或 array )
 @submit | options.buttonGroup 为true时,提交点击| function(form)
 @cancel | options.buttonGroup 为true时,取消点击 | 
 
-> qform 对外暴露一个 getFormRef() 来返回el-form的ref
+> qformer 对外暴露一个 getFormRef() 来返回el-form的ref
 
 #### option api
 
@@ -89,21 +89,21 @@ item| 对应el-form-item 属性透传，(prop 对应 name, 不需要再声明pro
 - 全局引入
 
 ```
-import QFormCreator from 'q-form'
-Vue.use(QFormCreator, {
+import QFormerCreator from 'q-former'
+Vue.use(QFormerCreator, {
     // 默认使用element-ui,可不填写,可选element、iview
   ui: 'element',
   // 默认在开发模式开启表单debug, 可不填写
   debug: process.env.NODE_ENV === 'development', 可不填写
   // 组件名默认 q-form, 可不填
-  name: 'q-form',
+  name: 'q-former',
 })
 ```
 
 
 ```
 <template>
-<q-form
+<q-former
   v-model="formData"
   :option="option"
   :fields="fields"
@@ -287,7 +287,7 @@ http://gitlab.ywwl.com/yfe/vue-form-creator/blob/master/src/components/FormDemo.
 import {
     validatorFunc,
     decimal0To100, integer, ...
-} from 'vuejs-form-creator/lib/rules.js'
+} from 'q-former/lib/rules.js'
 
 fields() {
   return [

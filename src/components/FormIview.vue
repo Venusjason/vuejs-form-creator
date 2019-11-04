@@ -1,6 +1,6 @@
 <template>
 <div>
-  <q-form
+  <q-former
     v-model="formValidate"
     :option="options"
     :fields="fields"
