@@ -1,4 +1,6 @@
-# vue-form-creator (element ui/ iview适配版本)
+# QFormer (前身vue-form-creator) (element ui/ iview适配版本)
+
+> QFormer 谐音 `kill former`、`cute former`, 表单大杀器帮助开发者迅速搞定vue生态（element-ui、iview）表单开发
 
 - el-form 在复杂表单上代码量较大
 - 动态校验表单项比较麻烦
@@ -32,7 +34,7 @@ module.exports = {
 > 注意：@vue/babel-preset-jsx默认会注入一个h语法糖，会与vue本身冲突，这个配置要设置false，否则项目启动会报错
 
 
-#### form-creator api
+#### qformer api
 
 参数 | 说明 | 类型 
 ---|--- | ---
@@ -42,7 +44,7 @@ fields | 表单域数组 | Array( item 可以是object 或 array )
 @submit | options.buttonGroup 为true时,提交点击| function(form)
 @cancel | options.buttonGroup 为true时,取消点击 | 
 
-> form-creator 对外暴露一个 getFormRef() 来返回el-form的ref
+> qformer 对外暴露一个 getFormRef() 来返回el-form的ref
 
 #### option api
 
@@ -62,10 +64,12 @@ buttonGroup | 表单 submit、cancel按钮组合| boolean/function| true/false,f
 ---|--- |--- |--- |---
 tag | 标签, 与component不同时使用| string | - | el-input
 component | 组件，适用于自定义表单控件值 | function | - | -
+formItemComponent（0.12.0） | 组件,适用纯ui展示 | function | - | -
 label | label展示值,同下item(label),优先级 label < item.label
 name | 表单对应字段 | string | - | -
 options| select checkbox-group时使用 | {label: '', value: ''}[] | 
-previewFormItemValue| 可选参数,当option.status 为preview时生效,展示文字自定义 | - | (value, h) => value| form[name]
+formItemStatus （0.12.0） | 优先级高于 option.status，便于表单部分字段特殊状态处理 | string | edit、preview | edit
+previewValue/previewFormItemValue| 可选参数,当option.status 为preview时生效,展示文字自定义 | - | (value, h) => value| form[name]
 scopedSlots | 可选参数,动态slot，必须使用h函数 | jsx component[]
 on | 控件事件透传，在需要做字段联动时使用| object
 rules | 该字段校验规则,与el-form一致
@@ -85,21 +89,21 @@ item| 对应el-form-item 属性透传，(prop 对应 name, 不需要再声明pro
 - 全局引入
 
 ```
-import VueFormCreator from '@yowant/vue-form-creator'
-Vue.use(VueFormCreator, {
+import QFormerCreator from 'q-former'
+Vue.use(QFormerCreator, {
     // 默认使用element-ui,可不填写,可选element、iview
   ui: 'element',
   // 默认在开发模式开启表单debug, 可不填写
   debug: process.env.NODE_ENV === 'development', 可不填写
-  // 组件名默认 form-creator, 可不填
-  name: 'form-creator',
+  // 组件名默认 q-form, 可不填
+  name: 'q-former',
 })
 ```
 
 
 ```
 <template>
-<form-creator 
+<q-former
   v-model="formData"
   :option="option"
   :fields="fields"
@@ -273,3 +277,96 @@ http://gitlab.ywwl.com/yfe/vue-form-creator/blob/master/src/components/FormDemo.
 ```
 
 项目内网git地址`http://gitlab.ywwl.com/yfe/vue-form-creator`
+
+## 工具链tools
+
+### rules
+为了便于开发，内置了常见校验规则库，使用示例
+
+```
+import {
+    validatorFunc,
+    decimal0To100, integer, ...
+} from 'q-former/lib/rules.js'
+
+fields() {
+  return [
+    {
+      label: '名称',
+      name: 'name',
+      placeholder: 'Enter your name',
+      // formItemStatus: 'edit',
+      rules: [
+        'required', limitLength(6),
+      ],
+    },
+    {
+      label: '价格',
+      name: 'fee',
+      placeholder: '请输入价格',
+      // formItemStatus: 'edit',
+      rules: [
+        'required', decimal0To100,
+      ],
+    },
+    {
+      label: '年龄',
+      name: 'age',
+      rules: 'required'
+    }
+  ]
+}
+
+```
+已内置规则示例
+```
+limitLength(max, min = 0) // 长度限制 0 ~ max
+
+export const regs = {
+  // 1 ~ 100之间的整数
+  integer1To100: [/^(([1-9]\d?)|100)$/, '请输入非零正整数且不大于100'],
+  // 非负整数
+  positiveInteger: [/^[0-9]*$/, '请输入整数'],
+  // 整数 包含: 正 负 0
+  integer: [/^-?[0-9]*$/, '请输入非负整数'],
+  // 最多保留2位小数
+  maxDecimal2: [
+    /^-?[0-9]+(.[0-9]{1,2})?$/,
+    '请输入数字，最多保留2位小数',
+  ],
+  // 0 ~ 100 最多2位小数 包含0
+  decimal0To100: [
+    /^([0-9]\d?(\.\d{1,2})?|0.\d{1,2}|100|100.0|100.00)$/,
+    '100之间数字，最多保留2位小数'
+  ],
+  email: [
+    /^([0-9]\d?(\.\d{1,2})?|0.\d{1,2}|100|100.0|100.00)$/,
+    '邮箱格式有误',
+  ],
+  phone: [
+    /^1[0-9]{10}$/,
+    '手机号格式有误'
+  ],
+  url: [
+    /^(ht|f)tps?:\/\//i,
+    '网址格式有误'
+  ],
+}
+```
+> validatorFunc 是对校验写法做一个封装，只需要传入 元祖[reg, message]即为一个校验，内部实现如下
+```
+/**
+ * 校验 高阶函数
+ * @param {*} regRule [reg, message]
+ */
+export const validatorFunc = (regRule) => {
+  const [reg, message] = regRule
+  return (rule, val, callback) => {
+    // 有输入值 并且输入值不合法
+    if (val && !reg.test(val)) {
+      callback(new Error(message))
+    }
+    callback()
+  }
+}
+```

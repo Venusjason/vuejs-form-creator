@@ -25,6 +25,27 @@ const renderComponent = (component, h) => {
 
 const formCreator = (formCreatorConfig) => {
   const UI = Adaptive[formCreatorConfig.ui]
+
+  const computedRules = (rules, label = '此项', tag = UI.Input) => {
+    const rulesType = Object.prototype.toString.call(rules)
+    const selectStrTags = [
+      UI.Select, UI.RadioGroup, UI.Radio, UI.CheckboxGroup, UI.Checkbox,
+    ]
+    let rulesClone = rules || []
+    if (rulesType !== '[object Array]' && rules) {
+      rulesClone = [rules]
+    }
+    return rulesClone.map(rule => {
+      if (rule === 'required') {
+        const str = selectStrTags.indexOf(tag) > -1 ? '请选择' : '请填写'
+        return {
+          required: true, message: `${str + label}`
+        }
+      }
+      return rule
+    })
+  }
+
   return {
     name: formCreatorConfig.name || 'form-creator',
     props: {
@@ -103,7 +124,11 @@ const formCreator = (formCreatorConfig) => {
         ]
       )
 
-      return h('div', {}, [
+      return h('div', {
+        style: {
+          position: 'relative',
+        }
+      }, [
         elForm,
         // 开发环境 提供表单值查看功能
         isDebug && (h(formMsg, {
@@ -146,10 +171,21 @@ const formCreator = (formCreatorConfig) => {
       },
 
       renderFormItem (h, {
-        tag, component, rules, previewFormItemValue, label: itemLabel,
-        item: label = {}, class: detailClass = {}, style: detailStyle = {},
+        tag,
+        component,
+        rules,
+        previewFormItemValue,
+        formItemStatus,
+        label: itemLabel,
+        item: label = {},
+        class: detailClass = {},
+        style: detailStyle = {},
         ...detail
       }) {
+        // 防止表单控件 超出边界,设置 默认 maxWidth: '100%'
+        if (!detailStyle.maxWidth) {
+          detailStyle.maxWidth = '100%'
+        }
         if (tag && component) {
           console.error('tag 与 component不可同时使用')
           return null
@@ -178,7 +214,6 @@ const formCreator = (formCreatorConfig) => {
           // 表单联动可以在自定义on里处理
           ...detail.on || {}
         }
-
         let children = []
         // 自定义slot实现
         const scopedSlots = (detail.scopedSlots || []).map(ele => renderComponent(ele, h))
@@ -339,7 +374,9 @@ const formCreator = (formCreatorConfig) => {
         const formItemScopedSlots = (label.scopedSlots || []).map(ele => ele(h))
         let formItemChildren = []
         // 表单预览态
-        if (vm.option.status === 'preview') {
+        // 增加 formItemStatus 字段，优先级高于 option.status，便于表单部分字段特殊状态处理
+        const formItemStatus1 = formItemStatus || vm.option.status || 'edit'
+        if (formItemStatus1 === 'preview') {
           formItemChildren = previewText
           if (previewFormItemValue) {
             formItemChildren = previewFormItemValue(value, h)
@@ -359,7 +396,7 @@ const formCreator = (formCreatorConfig) => {
             style: formItemStyle,
             class: formItemClass,
             props: {
-              rules,
+              rules: computedRules(rules, labelStr, tag),
               size,
               label: labelStr + ((labelStr && (colon || autoAuffix)) ? '：' : ''),
               prop: name,
@@ -413,10 +450,25 @@ const formCreator = (formCreatorConfig) => {
             }, [...arrChild])
           }
           let formItem
+          // 值为null的情况
+          if (!item) return item
           if (item.name) {
             formItem = vm.renderFormItem(h, item)
-          } else { // 不对应表单字段
+          } else if (item.component) { // 不对应表单字段
             formItem = renderComponent(item.component, h)
+          } else if (item.formItemComponent) { // 不对应表单字段
+            formItem = h(
+              UI.FormItem,
+              {
+                props: {
+                  label: '',
+                  // 'label-width': '0px' || 0,
+                },
+                // 提升渲染准确性
+                key: i,
+              },
+              [renderComponent(item.formItemComponent, h)]
+            )
           }
           return h(UI.Col, {
             props: {

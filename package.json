@@ -1,11 +1,13 @@
 {
-  "name": "vuejs-form-creator",
-  "version": "0.11.0",
+  "name": "q-former",
+  "version": "1.0.0",
   "description": "vue json form 生成器, 适配element iview",
   "private": false,
   "main": "lib/index.js",
   "keywords": [
-    "vue",
+    "vue form",
+    "q-former",
+    "Q-former",
     "formCreator",
     "element",
     "iview"
@@ -18,6 +20,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "element-ui": "^2.5.4",
     "iview": "^3.4.2",
     "jsonview-vue": "^2.0.1",
     "vue": "^2.6.10"
@@ -30,6 +33,7 @@
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
+    "@vue/eslint-config-airbnb": "^4.0.1",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",

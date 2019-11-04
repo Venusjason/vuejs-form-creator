@@ -1,4 +1,4 @@
-import formCreator from './form.js'
+import formCreator from './createForm'
 
 const install = (Vue, options = {}) => {
   if (install.installed) return
@@ -8,7 +8,7 @@ const install = (Vue, options = {}) => {
     // 默认在开发模式开启表单debug
     debug: process.env.NODE_ENV === 'development',
     // 组件名默认 form-creator
-    name: 'form-creator',
+    name: 'q-former',
   }
   if (typeof options === 'string') {
     options = {
