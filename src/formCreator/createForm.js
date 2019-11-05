@@ -37,7 +37,7 @@ const computedKeyProps = (key, isDebug = false) => {
   }
 }
 
-const getArrKey = (str, data) => {
+const getArrKey = (str) => {
   // goods[0].id => goods.0.id
   const str1 = str.replace(/\[(\w+)\]/g, '.$1').replace(/^\./, '')
   const arr = str1.split('.') // [goods, 0, id]
@@ -249,10 +249,13 @@ export default (formCreatorConfig) => {
          * @param {number} formItemRowsLen
          */
         const renderFormItemCol = (formItemCol, formItemRowsLen = 1, i, j) => {
-          let formItem
-
-          if (!formItemCol) return null
-          formItem = vm.renderFormItem(h, formItemCol)
+          let formItem = formItemCol
+          if (Object.prototype.toString.call(formItemCol) === '[object Function]') {
+            // 动态render函数，自执行
+            formItem = formItemCol()
+          }
+          if (!formItem) return null
+          formItem = vm.renderFormItem(h, formItem)
 
           return h(
             UI.Col,
@@ -316,7 +319,7 @@ export default (formCreatorConfig) => {
         }
         // 只有一个 component
         if (!name && component) {
-          return renderComponent(component)
+          return renderComponent(component, h)
         }
         if (tag && component) {
           console.error('tag 与 component不可同时使用')
@@ -487,7 +490,6 @@ export default (formCreatorConfig) => {
           },
           formItemChildren,
         )
-
       },
       onSubmit() {
         const Form = this.$refs.form
@@ -498,5 +500,4 @@ export default (formCreatorConfig) => {
       },
     },
   }
-
 }

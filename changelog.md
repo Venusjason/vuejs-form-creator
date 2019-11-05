@@ -1,3 +1,9 @@
+### 1.0.1
+- fix
+  - renderComponent 漏传 h
+- changed
+ - 动态render函数 自动执行
+
 ### 1.0.0
 - changed
  - 仓库更名 q-former
