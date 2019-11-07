@@ -16,7 +16,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "release": "rollup -c && npm publish"
+    "release": "rollup -c && npm publish",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "dependencies": {
     "core-js": "^2.6.5",
@@ -41,7 +43,8 @@
     "rollup-plugin-node-resolve": "^5.0.4",
     "rollup-plugin-uglify": "^6.0.2",
     "uglify-es": "^3.3.9",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "vuepress": "^1.2.0"
   },
   "eslintConfig": {
     "root": true,
