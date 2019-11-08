@@ -28,7 +28,6 @@
     "vue": "^2.6.10"
   },
   "devDependencies": {
-    "@types/highlight.js": "^9.12.3",
     "@types/rollup-plugin-node-resolve": "^4.1.0",
     "@types/uglify-es": "^3.0.0",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
