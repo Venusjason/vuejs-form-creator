@@ -2,7 +2,7 @@
 
 > 入口文件 main.js
 
-```
+``` js
 import QFormerCreator from 'q-former'
 
 Vue.use(QFormerCreator, {
@@ -17,7 +17,7 @@ Vue.use(QFormerCreator, {
 
 ### 局部组件引入
 
-```
+``` vue
 <template>
 <div>
   <q-former

@@ -1,6 +1,6 @@
 > field为表单域配置,我们先来看一段el-form文档上示例代码的写法
 
-```
+``` vue
 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <el-form-item label="活动名称" prop="name">
     <el-input v-model="ruleForm.name"></el-input>
@@ -135,7 +135,7 @@ item| 对应el-form-item 属性透传，(prop 对应 name, 不需要再声明pro
 
 > 上边的表单，我们使用field来实现
 
-```
+``` js
 computed() {
   fields() {
     return [

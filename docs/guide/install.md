@@ -4,20 +4,20 @@
 
 推荐使用 npm 的方式安装，它能更好地和 webpack 打包工具配合使用
 
-```
+``` js
 npm i q-former --save
 ```
 
 ### vue-cli 3.0  引入jsx写法编译
 *vue 版本要求 > 2.6.0*
 
-```
+``` js
 npm install @vue/babel-preset-jsx @vue/babel-helper-vue-jsx-merge-props -D
 ```
 
 >修改 babel.config.js 或 .babelrc
 
-```
+``` js
 module.exports = {
     presets: [
        ['@vue/app', {

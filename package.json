@@ -28,6 +28,7 @@
     "vue": "^2.6.10"
   },
   "devDependencies": {
+    "@types/highlight.js": "^9.12.3",
     "@types/rollup-plugin-node-resolve": "^4.1.0",
     "@types/uglify-es": "^3.0.0",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
@@ -36,15 +37,19 @@
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
     "@vue/eslint-config-airbnb": "^4.0.1",
+    "@vuepress/plugin-search": "^1.0.0-rc.1",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "highlight.js": "^9.16.2",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-node-resolve": "^5.0.4",
     "rollup-plugin-uglify": "^6.0.2",
+    "sass-loader": "^8.0.0",
     "uglify-es": "^3.3.9",
     "vue-template-compiler": "^2.6.10",
-    "vuepress": "^1.2.0"
+    "vuepress": "^1.2.0",
+    "vuepress-plugin-demo-code": "^0.3.7"
   },
   "eslintConfig": {
     "root": true,

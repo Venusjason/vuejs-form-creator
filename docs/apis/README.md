@@ -12,7 +12,7 @@ fields | 表单域数组 | Array( item 可以是object 或 array )
 
 >示例:
 
-```
+``` vue
 <template>
   <q-former
     v-model="formData"

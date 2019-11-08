@@ -1,7 +1,8 @@
 
 > 已内置常见校验规则
 
-```
+使用方式
+``` js
 import {
     validatorFunc,
     decimal0To100, integer, ...
@@ -15,7 +16,7 @@ rules: [
 
 > validatorFunc 是对校验写法做一个封装，只需要传入 元祖[reg, message]即为一个校验，内部实现如下
 
-```
+``` js
 /**
  * 校验 高阶函数
  * @param {*} regRule [reg, message]
@@ -35,7 +36,7 @@ export const validatorFunc = (regRule) => {
 ```
 
 内置规则
-```
+``` js
 export const regs = {
   // 1 ~ 100之间的整数
   integer1To100: [/^(([1-9]\d?)|100)$/, '请输入非零正整数且不大于100'],

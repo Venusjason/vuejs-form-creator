@@ -1,5 +1,6 @@
 module.exports = {
   title: 'q-former',
+  base: '/q-former/',
   description: 'q-former 帮你快速搞定vue form',
   head: [
     ['link', { rel: 'icon', href: '/img/logo.ico' }],
@@ -60,4 +61,9 @@ module.exports = {
     ],
     displayAllHeaders: true,
   },
+  plugins: [
+    ['@vuepress/search', {
+      searchMaxSuggestions: 10
+    }],
+  ],
 }

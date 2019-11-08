@@ -12,7 +12,7 @@ buttonGroup | 表单 submit、cancel按钮组合| boolean/function| true/false,f
 
 > 示例
 
-```
+``` vue {4}
 <template>
 <q-former
   v-model="formData"
@@ -23,28 +23,34 @@ buttonGroup | 表单 submit、cancel按钮组合| boolean/function| true/false,f
 />
 </template>
 
+<script>
 
-data() {
-  return {
-    option: {
-      labelWidth: '100px',
-      colon: true,
-      buttonGroup: true,
-      status: 'edit',
-      debug: process.env.NODE_ENV === 'development',
-      inline: false,
+export default {
+
+  data() {
+    return {
+      option: {
+        labelWidth: '100px',
+        colon: true,
+        buttonGroup: true,
+        status: 'edit',
+        debug: process.env.NODE_ENV === 'development',
+        inline: false,
+      },
+    }
+  },
+  methods: {
+    onSubmit(form) {
+      form.validate(valid => {
+        // 校验结果逻辑
+      })
     },
-  }
-},
-methods: {
-  onSubmit(form) {
-    form.validate(valid => {
-      // 校验结果逻辑
-    })
-  },
-  onCancel() {
-    console.log('你点击了取消按钮')
-  },
+    onCancel() {
+      console.log('你点击了取消按钮')
+    },
 
-},
+  },
+}
+
+</script>
 ```
